@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "651754006697",
+    "project_id": "shopizyy",
+    "storage_bucket": "shopizyy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651754006697:android:51548aed63ad3c91ee21b8",
+        "android_client_info": {
+          "package_name": "com.shopiziapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651754006697-sr2evj7tgsv40pf1b0ctpmtqvlka6tlp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shopiziapp",
+            "certificate_hash": "261ee9788b5528ff940da4738df123afdc50773d"
+          }
+        },
+        {
+          "client_id": "651754006697-0fojkuoof25qbigtub6nfk6rt6ev05g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo5Ug7miK1dE64aXinuKtbrLKgFmx8w0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651754006697-0fojkuoof25qbigtub6nfk6rt6ev05g1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "651754006697-ua66s3lmqq4b3omcs7jsstaujp1a3lqc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shopiziapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651754006697:android:e99a3c18606418b8ee21b8",
+        "android_client_info": {
+          "package_name": "com.shopizy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651754006697-f0sg768e63ilvr25uaari5eojuov95gm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shopizy",
+            "certificate_hash": "261ee9788b5528ff940da4738df123afdc50773d"
+          }
+        },
+        {
+          "client_id": "651754006697-0fojkuoof25qbigtub6nfk6rt6ev05g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo5Ug7miK1dE64aXinuKtbrLKgFmx8w0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651754006697-0fojkuoof25qbigtub6nfk6rt6ev05g1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "651754006697-ua66s3lmqq4b3omcs7jsstaujp1a3lqc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shopiziapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

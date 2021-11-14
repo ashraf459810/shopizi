@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--- Background; tile is broken on Android 2.2 so just have super wide background that will get clipped  -->
+    <item android:gravity="fill_vertical">
+        <shape>
+            <solid android:color="@android:color/white"/>
+        </shape>
+    </item>
+
+</layer-list>

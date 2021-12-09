@@ -28,7 +28,8 @@ class ShowcasePage extends StatefulWidget {
   _ShowcasePageController createState() => _ShowcasePageController();
 }
 
-class _ShowcasePageController extends State<ShowcasePage> with AutomaticKeepAliveClientMixin<ShowcasePage> {
+class _ShowcasePageController extends State<ShowcasePage>
+    with AutomaticKeepAliveClientMixin<ShowcasePage> {
   var sliders = <BannerModel>[];
   var categories = <Category>[];
   var brands = <Brand>[];
@@ -38,7 +39,9 @@ class _ShowcasePageController extends State<ShowcasePage> with AutomaticKeepAliv
 
   @override
   void initState() {
-    Get.find<ShowcaseService>().fetchShowcaseContent(widget.showcaseId).then((showcaseContent) {
+    Get.find<ShowcaseService>()
+        .fetchShowcaseContent(widget.showcaseId)
+        .then((showcaseContent) {
       setState(() {
         isLoading = false;
         sliders = showcaseContent.sliders;
@@ -60,7 +63,12 @@ class _ShowcasePageController extends State<ShowcasePage> with AutomaticKeepAliv
   @override
   bool get wantKeepAlive => true;
 
-  bool get isEmptyPage => sliders.isEmpty && categories.isEmpty && brands.isEmpty && featuredProducts.isEmpty && banners.isEmpty;
+  bool get isEmptyPage =>
+      sliders.isEmpty &&
+      categories.isEmpty &&
+      brands.isEmpty &&
+      featuredProducts.isEmpty &&
+      banners.isEmpty;
 }
 
 class _ShowcasePageView extends StatelessWidget {
@@ -81,9 +89,13 @@ class _ShowcasePageView extends StatelessWidget {
                     delegate: SliverChildListDelegate(
                       [
                         BannerSlider(state.sliders),
-                        sectionTitle(FlutterI18n.translate(context, "featuredcategories")),
+                        sectionTitle(FlutterI18n.translate(
+                            context, "featuredcategories")),
                         FeaturedCategoriesGrid(state.categories),
-                        sectionTitle(FlutterI18n.translate(context, "popularbrands")),
+                        state.brands.isNotEmpty
+                            ? sectionTitle(
+                                FlutterI18n.translate(context, "popularbrands"))
+                            : SizedBox(),
                         BrandsList(state.brands),
                         featuredProductsTitle(context),
                         FeaturedProductsList(state.featuredProducts),
@@ -98,31 +110,40 @@ class _ShowcasePageView extends StatelessWidget {
 
   emptyState() => Container(
         alignment: Alignment.center,
-        child: Text('No data', style: appTheme.textStyles.subtitle1.copyWith(color: Colors.grey[400])),
+        child: Text('No data',
+            style: appTheme.textStyles.subtitle1
+                .copyWith(color: Colors.grey[400])),
       );
 
   sectionTitle(title) => Padding(
-        padding: const EdgeInsetsDirectional.only(start: 12, top: 24, bottom: 12),
-        child: Text(title, style: appTheme.textStyles.subtitle1.copyWith(fontWeight: appTheme.textStyles.bold)),
+        padding:
+            const EdgeInsetsDirectional.only(start: 12, top: 24, bottom: 12),
+        child: Text(title,
+            style: appTheme.textStyles.subtitle1
+                .copyWith(fontWeight: appTheme.textStyles.bold)),
       );
 
   featuredProductsTitle(BuildContext context) => Padding(
-        padding: const EdgeInsetsDirectional.only(start: 12, top: 24, end: 16, bottom: 12),
+        padding: const EdgeInsetsDirectional.only(
+            start: 12, top: 24, end: 16, bottom: 12),
         child: Row(
           children: [
             Text(FlutterI18n.translate(context, "featuredProducts"),
-                style: appTheme.textStyles.subtitle1.copyWith(fontWeight: appTheme.textStyles.bold)),
+                style: appTheme.textStyles.subtitle1
+                    .copyWith(fontWeight: appTheme.textStyles.bold)),
             Spacer(),
             GestureDetector(
               onTap: () => Get.to(() => ChangeNotifierProvider(
                     create: (_) => SearchProvider(
                       pageTitle: widget.showcaseName,
-                      initialDataParameters: DataParameters(showcase: widget.showcaseId, sortBy: 13),
+                      initialDataParameters: DataParameters(
+                          showcase: widget.showcaseId, sortBy: 13),
                     ),
                     child: SearchScreen(),
                   )),
               child: Text(FlutterI18n.translate(context, "viewall"),
-                  style: appTheme.textStyles.subtitle2.copyWith(color: appTheme.colors.orange)),
+                  style: appTheme.textStyles.subtitle2
+                      .copyWith(color: appTheme.colors.orange)),
             ),
           ],
         ),

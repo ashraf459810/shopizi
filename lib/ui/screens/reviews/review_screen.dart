@@ -36,7 +36,8 @@ class ReviewScreen extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
-                  child: CachedNetworkImage(imageUrl: provider.review.productImage, width: 80),
+                  child: CachedNetworkImage(
+                      imageUrl: provider.review.productImage, width: 80),
                 ),
                 SizedBox(width: 16),
                 Expanded(
@@ -48,18 +49,25 @@ class ReviewScreen extends StatelessWidget {
                       Text(provider.review.productName,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: appTheme.textStyles.h2.copyWith(color: AppColors.PRIMARY_COLOR)),
+                          style: appTheme.textStyles.h2
+                              .copyWith(color: AppColors.PRIMARY_COLOR)),
                       const SizedBox(height: 10),
                       if (provider.review.orderId != null)
-                        Text('${FlutterI18n.translate(context, 'order')} # ${provider.review.orderId}',
+                        Text(
+                            '${FlutterI18n.translate(context, 'order')} # ${provider.review.orderId}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: appTheme.textStyles.subtitle1.copyWith(color: appTheme.colors.darkGrey)),
-                      if (provider.review.orderId != null) const SizedBox(height: 8),
-                      Text(provider.review.createdOn ?? provider.review.createdOn,
+                            style: appTheme.textStyles.subtitle1
+                                .copyWith(color: appTheme.colors.darkGrey)),
+                      if (provider.review.orderId != null)
+                        const SizedBox(height: 8),
+                      Text(
+                          provider.review.createdOn ??
+                              provider.review.createdOn,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: appTheme.textStyles.subtitle1.copyWith(color: Colors.grey[500])),
+                          style: appTheme.textStyles.subtitle1
+                              .copyWith(color: Colors.grey[500])),
                       SizedBox(height: 36),
                     ],
                   ),
@@ -77,7 +85,8 @@ class ReviewScreen extends StatelessWidget {
                 ratingWidget: RatingWidget(
                   full: Icon(Icons.star, color: AppColors.PRIMARY_COLOR),
                   half: Icon(Icons.star_border, color: AppColors.PRIMARY_COLOR),
-                  empty: Icon(Icons.star_border, color: AppColors.PRIMARY_COLOR),
+                  empty:
+                      Icon(Icons.star_border, color: AppColors.PRIMARY_COLOR),
                 ),
                 glow: false,
                 unratedColor: Colors.grey[300],
@@ -95,7 +104,7 @@ class ReviewScreen extends StatelessWidget {
             SizedBox(height: 8),
             CustomTextField(
               controller: provider.reviewController,
-              hint: 'type your review ...',
+              hint: FlutterI18n.translate(context, 'typeyourreview'),
               padding: EdgeInsets.all(16),
               textStyle: TextStyle(fontSize: 16),
               lines: 8,
@@ -111,16 +120,20 @@ class ReviewScreen extends StatelessWidget {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(AppColors.PRIMARY_COLOR),
+                          valueColor:
+                              AlwaysStoppedAnimation(AppColors.PRIMARY_COLOR),
                         ),
                       ),
                     )
                   : TextButton(
                       onPressed: () => provider.addReview(),
                       style: ButtonStyle(
-                          shape: MaterialStateProperty.resolveWith((states) => AppShapes.roundedRectShape(radius: 8)),
-                          backgroundColor: MaterialStateProperty.resolveWith((states) => AppColors.PRIMARY_COLOR)),
-                      child: Text(FlutterI18n.translate(context, 'postreview'), style: TextStyle(fontSize: 18, color: Colors.white)),
+                          shape: MaterialStateProperty.resolveWith((states) =>
+                              AppShapes.roundedRectShape(radius: 8)),
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                              (states) => AppColors.PRIMARY_COLOR)),
+                      child: Text(FlutterI18n.translate(context, 'postreview'),
+                          style: TextStyle(fontSize: 18, color: Colors.white)),
                     ),
             ),
           ],

@@ -15,30 +15,39 @@ class BrandsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 75,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: brands.length,
-        itemBuilder: (ctx, index) => listItem(context, brands[index], brands.getItemLocation(index)),
-      ),
-    );
+    return brands.isNotEmpty
+        ? Container(
+            height: 75,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: brands.length,
+              itemBuilder: (ctx, index) => listItem(
+                  context, brands[index], brands.getItemLocation(index)),
+            ),
+          )
+        : SizedBox();
   }
 
-  Widget listItem(BuildContext context, Brand brand, ListItemLocation location) {
+  Widget listItem(
+      BuildContext context, Brand brand, ListItemLocation location) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => ChangeNotifierProvider(
-            create: (_) => SearchProvider(initialDataParameters: brand.dataParameters, pageTitle: brand.name),
+            create: (_) => SearchProvider(
+                initialDataParameters: brand.dataParameters,
+                pageTitle: brand.name),
             child: SearchScreen(),
           ),
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.only(start: location == ListItemLocation.first ? 12 : 8),
+        padding: EdgeInsetsDirectional.only(
+            start: location == ListItemLocation.first ? 12 : 8),
         child: ClipRRect(
-            borderRadius: BorderRadius.circular(8), child: CachedNetworkImage(width: 75, height: 75, imageUrl: brand.picturePath)),
+            borderRadius: BorderRadius.circular(8),
+            child: CachedNetworkImage(
+                width: 75, height: 75, imageUrl: brand.picturePath)),
       ),
     );
   }

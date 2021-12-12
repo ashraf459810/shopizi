@@ -16,4 +16,4 @@ class MainActivity: FlutterActivity() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancelAll()
     }
-}
+ }

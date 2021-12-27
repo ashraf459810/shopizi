@@ -25,7 +25,7 @@ dependencies:
     sdk: flutter
   flutter_number_picker: ^1.0.4
   flutter_rating_bar: ^4.0.0
-  fluttertoast: ^4.0.1
+  fluttertoast: ^7.1.8
   get: ^4.0.0-nullsafety.2
   get_storage: ^2.0.1
   http: ^0.13.1

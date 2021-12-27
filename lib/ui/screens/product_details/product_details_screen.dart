@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -573,20 +573,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       onTap: () {
         chosenoption = option;
 
-        //if product hash=priceoeroption
-        //product.price = option.price
-
-        // if (provider.product.haspriceperoption) {
-        //   this.price = option.propertyPrice.price;
-        //   this.oldPrice = option.propertyPrice.oldPrice;
-        //   this.priceAfterDiscount = option.propertyPrice.priceAfterDiscount;
-        //   setState(() {});
-        // }
         chosedattribueid = attributeId;
-        print(chosenoption);
+
         if (option.status)
           setState(() {
             provider.selectedOptions.addAll({attributeId: option.id});
+            print(provider.product.haspriceperoption);
             provider.product.haspriceperoption
                 ? provider.selectedOptions.addAll({chosedattribueid: option.id})
                 : null;

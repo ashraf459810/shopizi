@@ -31,8 +31,10 @@ class WaitingReviewsPage extends StatelessWidget {
             ),
           )
         : ListView.builder(
+            controller: provider.scrollController,
             itemCount: provider.reviews.length,
-            itemBuilder: (ctx, index) => listItem(context, provider.reviews[index]),
+            itemBuilder: (ctx, index) =>
+                listItem(context, provider.reviews[index]),
           );
   }
 
@@ -54,7 +56,8 @@ class WaitingReviewsPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: CachedNetworkImage(imageUrl: review.productImage, width: 120),
+              child:
+                  CachedNetworkImage(imageUrl: review.productImage, width: 120),
             ),
             SizedBox(width: 16),
             Expanded(
@@ -66,18 +69,22 @@ class WaitingReviewsPage extends StatelessWidget {
                   Text(review.productName,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: appTheme.textStyles.h2.copyWith(color: AppColors.PRIMARY_COLOR)),
+                      style: appTheme.textStyles.h2
+                          .copyWith(color: AppColors.PRIMARY_COLOR)),
                   const SizedBox(height: 10),
                   if (review.orderId != null)
-                    Text('${FlutterI18n.translate(context, 'order')} # ${review.orderId}',
+                    Text(
+                        '${FlutterI18n.translate(context, 'order')} # ${review.orderId}',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: appTheme.textStyles.subtitle1.copyWith(color: appTheme.colors.darkGrey)),
+                        style: appTheme.textStyles.subtitle1
+                            .copyWith(color: appTheme.colors.darkGrey)),
                   const SizedBox(height: 8),
                   Text(review.deliveryDate,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: appTheme.textStyles.subtitle1.copyWith(color: Colors.grey[500])),
+                      style: appTheme.textStyles.subtitle1
+                          .copyWith(color: Colors.grey[500])),
                   SizedBox(height: 36),
                   TextButton(
                     onPressed: () => Get.to(
@@ -89,10 +96,14 @@ class WaitingReviewsPage extends StatelessWidget {
                       if (value ?? false) provider.reload();
                     }),
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.resolveWith((states) => EdgeInsets.symmetric(horizontal: 16, vertical: 0)),
-                        shape: MaterialStateProperty.resolveWith((states) => AppShapes.roundedRectShape(radius: 5)),
-                        backgroundColor: MaterialStateProperty.resolveWith((states) => AppColors.PRIMARY_COLOR)),
-                    child: Text(FlutterI18n.translate(context, 'review'), style: TextStyle(fontSize: 15, color: Colors.white)),
+                        padding: MaterialStateProperty.resolveWith((states) =>
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 0)),
+                        shape: MaterialStateProperty.resolveWith(
+                            (states) => AppShapes.roundedRectShape(radius: 5)),
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                            (states) => AppColors.PRIMARY_COLOR)),
+                    child: Text(FlutterI18n.translate(context, 'review'),
+                        style: TextStyle(fontSize: 15, color: Colors.white)),
                   ),
                 ],
               ),

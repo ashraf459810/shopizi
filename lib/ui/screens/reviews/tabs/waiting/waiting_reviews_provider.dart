@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopizy/models/product_review.dart';
@@ -13,6 +14,7 @@ class WaitingReviewsProvider with ChangeNotifier {
 
   WaitingReviewsProvider() {
     Get.find<ReviewService>().fetchWaitingReviewsPage(page).then((value) {
+      log("here at the brgining");
       reviews = value.reviews;
       initialLoading = false;
       ++page;
@@ -20,7 +22,9 @@ class WaitingReviewsProvider with ChangeNotifier {
       notifyListeners();
     });
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        log("here");
         fetchAnotherReviewsPage();
       }
     });
@@ -41,11 +45,13 @@ class WaitingReviewsProvider with ChangeNotifier {
     if (page > lastPage) return;
     moreLoading = true;
     notifyListeners();
-    ProductsReviewsPage reviewPage = await Get.find<ReviewService>().fetchWaitingReviewsPage(page);
+    ProductsReviewsPage reviewPage =
+        await Get.find<ReviewService>().fetchWaitingReviewsPage(page);
     reviews.addAll(reviewPage.reviews);
     ++page;
     lastPage = reviewPage.totalPages;
     moreLoading = false;
+
     notifyListeners();
   }
 }

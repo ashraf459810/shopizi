@@ -31,8 +31,11 @@ class AddressProvider with ChangeNotifier {
       addressController.text = address.address;
       nameController.text = address.name;
       titleController.text = address.title;
-      phoneNumberController.text = address.phoneNumber?.replaceFirst('+964', '');
-      if (addressToEdit != null) _selectedShippingPoint = value.firstWhere((element) => element.id == addressToEdit.shippingPointId);
+      phoneNumberController.text =
+          address.phoneNumber?.replaceFirst('+964', '');
+      if (addressToEdit != null)
+        _selectedShippingPoint = value.firstWhere(
+            (element) => element.id == addressToEdit.shippingPointId);
       loading = false;
       notifyListeners();
     });
@@ -40,14 +43,19 @@ class AddressProvider with ChangeNotifier {
 
   addUpdateAddress() async {
     try {
-      address.address = addressController.text.isNotEmpty ? addressController.text : null;
-      address.name = nameController.text.isNotEmpty ? nameController.text : null;
-      address.title = titleController.text.isNotEmpty ? titleController.text : null;
-      address.phoneNumber = phoneNumberController.text.isNotEmpty ? '+964${phoneNumberController.text}' : null;
+      address.address =
+          addressController.text.isNotEmpty ? addressController.text : null;
+      address.name =
+          nameController.text.isNotEmpty ? nameController.text : null;
+      address.title =
+          titleController.text.isNotEmpty ? titleController.text : null;
+      address.phoneNumber = phoneNumberController.text.isNotEmpty
+          ? '+964${phoneNumberController.text}'
+          : null;
       await Get.find<AddressService>().addUpdateAddress(address);
       Get.back(result: true);
     } catch (ex) {
-      Fluttertoast.showToast(msg: 'Failed');
+      Fluttertoast.showToast(msg: 'please complete your information');
     }
   }
 

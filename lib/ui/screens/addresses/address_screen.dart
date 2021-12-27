@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shopizy/main.dart';
 import 'package:shopizy/ui/screens/addresses/address_provider.dart';
@@ -31,7 +32,8 @@ class AddressScreen extends StatelessWidget {
               child: ListView(
                 children: [
                   SizedBox(height: 24),
-                  Text(FlutterI18n.translate(context, 'title'), style: GlobalStyle.authTitle),
+                  Text(FlutterI18n.translate(context, 'title'),
+                      style: GlobalStyle.authTitle),
                   SizedBox(height: 8),
                   CustomTextField(
                     controller: provider.titleController,
@@ -45,7 +47,8 @@ class AddressScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-                  Text(FlutterI18n.translate(context, 'city'), style: GlobalStyle.authTitle),
+                  Text(FlutterI18n.translate(context, 'city'),
+                      style: GlobalStyle.authTitle),
                   SizedBox(height: 8),
                   Container(
                     height: 50,
@@ -56,15 +59,23 @@ class AddressScreen extends StatelessWidget {
                         value: provider.selectedShippingPoint,
                         hint: Text(
                           FlutterI18n.translate(context, 'selectcity'),
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(color: appTheme.colors.hint),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(color: appTheme.colors.hint),
                         ),
-                        items: provider.shippingPoints.map((e) => DropdownMenuItem(value: e, child: Text(e.title))).toList(),
-                        onChanged: (selectedShippingPoint) => provider.selectedShippingPoint = selectedShippingPoint,
+                        items: provider.shippingPoints
+                            .map((e) => DropdownMenuItem(
+                                value: e, child: Text(e.title)))
+                            .toList(),
+                        onChanged: (selectedShippingPoint) => provider
+                            .selectedShippingPoint = selectedShippingPoint,
                       ),
                     ),
                   ),
                   SizedBox(height: 12),
-                  Text(FlutterI18n.translate(context, 'address'), style: GlobalStyle.authTitle),
+                  Text(FlutterI18n.translate(context, 'address'),
+                      style: GlobalStyle.authTitle),
                   SizedBox(height: 8),
                   CustomTextField(
                     controller: provider.addressController,
@@ -78,7 +89,8 @@ class AddressScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 45),
-                  Text(FlutterI18n.translate(context, 'fullname'), style: GlobalStyle.authTitle),
+                  Text(FlutterI18n.translate(context, 'fullname'),
+                      style: GlobalStyle.authTitle),
                   SizedBox(height: 8),
                   CustomTextField(
                     controller: provider.nameController,
@@ -92,7 +104,8 @@ class AddressScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12),
-                  Text(FlutterI18n.translate(context, 'phonenumber'), style: GlobalStyle.authTitle),
+                  Text(FlutterI18n.translate(context, 'phonenumber'),
+                      style: GlobalStyle.authTitle),
                   SizedBox(height: 8),
                   Directionality(
                     textDirection: TextDirection.ltr,
@@ -100,7 +113,9 @@ class AddressScreen extends StatelessWidget {
                       controller: provider.phoneNumberController,
                       hint: '750XXXXXXX',
                       textStyle: TextStyle(fontSize: 16),
-                      textInputFormatters: [LengthLimitingTextInputFormatter(10)],
+                      textInputFormatters: [
+                        LengthLimitingTextInputFormatter(10)
+                      ],
                       keyboardType: TextInputType.phone,
                       prefixIcon: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -122,16 +137,40 @@ class AddressScreen extends StatelessWidget {
                   Container(
                     height: 55,
                     child: TextButton(
-                      onPressed: () => provider.addUpdateAddress(),
+                      onPressed: () {
+                        if (provider.addressController.text != null &&
+                            provider.titleController.text != null &&
+                            provider.nameController.text != null &&
+                            provider.selectedShippingPoint != null &&
+                            provider.phoneNumberController.text != null) {
+                          provider.addUpdateAddress();
+                        } else {
+                          const snackBar = SnackBar(
+                            backgroundColor: Colors.orange,
+                            content: Text(
+                              'please compelete your information ',
+                            ),
+                          );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      },
                       style: ButtonStyle(
-                          shape: MaterialStateProperty.resolveWith((states) => AppShapes.roundedRectShape(radius: 6)),
-                          backgroundColor: MaterialStateProperty.resolveWith((states) => AppColors.PRIMARY_COLOR)),
+                          shape: MaterialStateProperty.resolveWith((states) =>
+                              AppShapes.roundedRectShape(radius: 6)),
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                              (states) => AppColors.PRIMARY_COLOR)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.add_location_alt_outlined, color: Colors.white, size: 22),
+                          Icon(Icons.add_location_alt_outlined,
+                              color: Colors.white, size: 22),
                           SizedBox(width: 12),
-                          Text(FlutterI18n.translate(context, 'saveaddress'), style: TextStyle(fontSize: 17, color: Colors.white)),
+                          Text(FlutterI18n.translate(context, 'saveaddress'),
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.white)),
                         ],
                       ),
                     ),
@@ -143,15 +182,20 @@ class AddressScreen extends StatelessWidget {
                       child: TextButton(
                         onPressed: () => provider.deleteAddress(),
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.resolveWith(
-                              (states) => AppShapes.roundedRectShape(radius: 6, borderColor: Colors.red)),
+                          shape: MaterialStateProperty.resolveWith((states) =>
+                              AppShapes.roundedRectShape(
+                                  radius: 6, borderColor: Colors.red)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.close, color: Colors.red, size: 22),
                             SizedBox(width: 12),
-                            Text(FlutterI18n.translate(context, 'Remove address'), style: TextStyle(fontSize: 17, color: Colors.red)),
+                            Text(
+                                FlutterI18n.translate(
+                                    context, 'Remove address'),
+                                style:
+                                    TextStyle(fontSize: 17, color: Colors.red)),
                           ],
                         ),
                       ),

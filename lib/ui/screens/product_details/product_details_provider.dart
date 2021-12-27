@@ -25,6 +25,7 @@ class ProductDetailsProvider with ChangeNotifier {
   int requestedQuantity = 1;
   bool isFavorite;
   int lastSeenProductsLimit = 3;
+  get oldprice => product.oldPrice;
   CarouselController carouselController = CarouselController();
 
   ProductDetailsProvider(this.productId) {
@@ -40,15 +41,21 @@ class ProductDetailsProvider with ChangeNotifier {
       notifyListeners();
       addToLastSeenProducts();
       if (product.groupKey != null)
-        Get.find<ProductService>().fetchGroupProducts(productId, product.groupKey).then((products) {
+        Get.find<ProductService>()
+            .fetchGroupProducts(productId, product.groupKey)
+            .then((products) {
           this.groupProducts = products;
           notifyListeners();
         });
-      Get.find<ProductService>().fetchRelatedProducts(productId).then((products) {
+      Get.find<ProductService>()
+          .fetchRelatedProducts(productId)
+          .then((products) {
         this.relatedProducts = products;
         notifyListeners();
       });
-      Get.find<ProductService>().fetchProductReviewsPage(productId, 1).then((reviewsPage) {
+      Get.find<ProductService>()
+          .fetchProductReviewsPage(productId, 1)
+          .then((reviewsPage) {
         this.reviews.addAll(reviewsPage.reviews.take(5));
         notifyListeners();
       });
@@ -56,7 +63,8 @@ class ProductDetailsProvider with ChangeNotifier {
     getFavoriteStatus();
   }
 
-  bool isOptionSelected(int optionId) => selectedOptions.values.any((element) => element == optionId);
+  bool isOptionSelected(int optionId) =>
+      selectedOptions.values.any((element) => element == optionId);
 
   Future getFavoriteStatus() async {
     isFavorite = await Get.find<FavoriteController>().isFavorite(productId);
@@ -65,7 +73,9 @@ class ProductDetailsProvider with ChangeNotifier {
 
   // product.attributes.length == 0 => product has no attributes to select
   // product.attributes.length == selectedOptions.length => user has selected values for all attributes
-  bool get canAddToCart => product.attributes.length == 0 || product.attributes.length == selectedOptions.length;
+  bool get canAddToCart =>
+      product.attributes.length == 0 ||
+      product.attributes.length == selectedOptions.length;
 
   addToCart(BuildContext ctx) async {
     editCart = true;
@@ -75,8 +85,10 @@ class ProductDetailsProvider with ChangeNotifier {
       options.add(AttributeSelectedOption(attributeId: key, optionId: value));
     });
     try {
-      await Get.find<CartController>().addToCart(product.id, requestedQuantity, options);
-      Fluttertoast.showToast(msg: FlutterI18n.translate(ctx, 'productaddedtocart'));
+      await Get.find<CartController>()
+          .addToCart(product.id, requestedQuantity, options);
+      Fluttertoast.showToast(
+          msg: FlutterI18n.translate(ctx, 'productaddedtocart'));
       requestedQuantity = 1;
     } catch (ex) {
       Fluttertoast.showToast(msg: ex.toString());
@@ -87,13 +99,18 @@ class ProductDetailsProvider with ChangeNotifier {
   }
 
   addToLastSeenProducts() {
-    Map<int, String> lastSeenProducts = ((GetStorage().read(StorageKeys.lastSeenProducts) ?? {}) as Map)
-        .map((key, value) => MapEntry(int.parse(key), value as String));
+    Map<int, String> lastSeenProducts =
+        ((GetStorage().read(StorageKeys.lastSeenProducts) ?? {}) as Map)
+            .map((key, value) => MapEntry(int.parse(key), value as String));
     // to put last seen product at first
-    lastSeenProducts = {productId: product.picturePath}..addAll(lastSeenProducts);
+    lastSeenProducts = {productId: product.picturePath}
+      ..addAll(lastSeenProducts);
     // set Limit
-    lastSeenProducts = Map.fromIterable(lastSeenProducts.keys.take(lastSeenProductsLimit), value: (k) => lastSeenProducts[k]);
-    GetStorage().write(StorageKeys.lastSeenProducts, lastSeenProducts.map((key, value) => MapEntry(key.toString(), value)));
+    lastSeenProducts = Map.fromIterable(
+        lastSeenProducts.keys.take(lastSeenProductsLimit),
+        value: (k) => lastSeenProducts[k]);
+    GetStorage().write(StorageKeys.lastSeenProducts,
+        lastSeenProducts.map((key, value) => MapEntry(key.toString(), value)));
   }
 
   toggleFavorite(BuildContext ctx, {addToFavorite = false}) async {
@@ -101,7 +118,12 @@ class ProductDetailsProvider with ChangeNotifier {
         ? await FavoriteController.instance.addToFavorite(product: product)
         : await FavoriteController.instance.toggleFavorite(product: product);
     isFavorite = !isFavorite;
-    Fluttertoast.showToast(msg: FlutterI18n.translate(ctx, isFavorite ? 'productaddedtofavorites' : 'productremovedfromfavorites'));
+    Fluttertoast.showToast(
+        msg: FlutterI18n.translate(
+            ctx,
+            isFavorite
+                ? 'productaddedtofavorites'
+                : 'productremovedfromfavorites'));
     notifyListeners();
   }
 }

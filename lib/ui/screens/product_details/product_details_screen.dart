@@ -349,7 +349,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         SizedBox(width: 8),
                         if (provider.product.oldPrice != null &&
                             provider.product.oldPrice != 0)
-                          Text(changeprice(chosenoption, "oldprice"),
+                          Text(
+                              provider.product.oldPrice != null
+                                  ? provider.product.oldPrice.toString()
+                                  : changeprice(chosenoption, "oldprice"),
                               style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.grey[400],
@@ -707,11 +710,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     }
     if (value == "oldprice") {
       if (option != null)
-        return chosenoption != null
-            ? chosenoption.propertyPrice.oldPrice > 0
+        return
+            //  chosenoption != null
+            //     ?
+            chosenoption.propertyPrice.oldPrice >= 0
                 ? chosenoption.propertyPrice.oldPrice.currencyFormat()
-                : " "
-            : "";
+                // : " "
+                : "";
       else
         return "";
     }

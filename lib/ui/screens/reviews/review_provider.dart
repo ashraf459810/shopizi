@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shopizy/models/product_review.dart';
@@ -11,7 +10,8 @@ class ReviewProvider with ChangeNotifier {
   bool posting = false;
 
   ReviewProvider(this.review) {
-    if (review.review?.isNotEmpty ?? false) reviewController.text = review.review;
+    if (review.review?.isNotEmpty ?? false)
+      reviewController.text = review.review;
   }
 
   addReview() async {

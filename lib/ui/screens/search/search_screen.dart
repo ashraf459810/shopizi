@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("here thge main");
     provider = Provider.of(context);
     return Scaffold(
       endDrawerEnableOpenDragGesture: false,

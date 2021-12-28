@@ -32,8 +32,10 @@ class ReviewedProductsPage extends StatelessWidget {
             ),
           )
         : ListView.builder(
+            controller: provider.scrollController,
             itemCount: provider.reviews.length,
-            itemBuilder: (ctx, index) => listItem(context, provider.reviews[index]),
+            itemBuilder: (ctx, index) =>
+                listItem(context, provider.reviews[index]),
           );
   }
 
@@ -55,7 +57,8 @@ class ReviewedProductsPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
-              child: CachedNetworkImage(imageUrl: review.productImage, width: 120),
+              child:
+                  CachedNetworkImage(imageUrl: review.productImage, width: 120),
             ),
             SizedBox(width: 16),
             Expanded(
@@ -67,26 +70,32 @@ class ReviewedProductsPage extends StatelessWidget {
                   Text(review.productName,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: appTheme.textStyles.h2.copyWith(color: AppColors.PRIMARY_COLOR)),
+                      style: appTheme.textStyles.h2
+                          .copyWith(color: AppColors.PRIMARY_COLOR)),
                   const SizedBox(height: 10),
                   RatingBar(review.rate),
                   const SizedBox(height: 10),
                   Text(review.review,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: appTheme.textStyles.subtitle1.copyWith(color: appTheme.colors.darkGrey, fontSize: 16)),
+                      style: appTheme.textStyles.subtitle1.copyWith(
+                          color: appTheme.colors.darkGrey, fontSize: 16)),
                   const SizedBox(height: 8),
                   if (review.createdOn != null)
                     Text(review.createdOn,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: appTheme.textStyles.subtitle1.copyWith(color: Colors.grey[500])),
+                        style: appTheme.textStyles.subtitle1
+                            .copyWith(color: Colors.grey[500])),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Text('${FlutterI18n.translate(context, 'status')}:', style: TextStyle(fontSize: 15)),
+                      Text('${FlutterI18n.translate(context, 'status')}:',
+                          style: TextStyle(fontSize: 15)),
                       SizedBox(width: 4),
-                      Expanded(child: Text(review.reviewStatus, style: TextStyle(fontSize: 15))),
+                      Expanded(
+                          child: Text(review.reviewStatus,
+                              style: TextStyle(fontSize: 15))),
                     ],
                   ),
                   SizedBox(height: 12),
@@ -100,10 +109,14 @@ class ReviewedProductsPage extends StatelessWidget {
                       if (value ?? false) provider.reload();
                     }),
                     style: ButtonStyle(
-                        padding: MaterialStateProperty.resolveWith((states) => EdgeInsets.symmetric(horizontal: 16, vertical: 0)),
-                        shape: MaterialStateProperty.resolveWith((states) => AppShapes.roundedRectShape(radius: 5)),
-                        backgroundColor: MaterialStateProperty.resolveWith((states) => AppColors.PRIMARY_COLOR)),
-                    child: Text(FlutterI18n.translate(context, 'details'), style: TextStyle(fontSize: 15, color: Colors.white)),
+                        padding: MaterialStateProperty.resolveWith((states) =>
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 0)),
+                        shape: MaterialStateProperty.resolveWith(
+                            (states) => AppShapes.roundedRectShape(radius: 5)),
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                            (states) => AppColors.PRIMARY_COLOR)),
+                    child: Text(FlutterI18n.translate(context, 'details'),
+                        style: TextStyle(fontSize: 15, color: Colors.white)),
                   ),
                 ],
               ),

@@ -145,12 +145,12 @@ class AddressScreen extends StatelessWidget {
                             provider.phoneNumberController.text != null) {
                           provider.addUpdateAddress();
                         } else {
-                          const snackBar = SnackBar(
-                            backgroundColor: Colors.orange,
-                            content: Text(
-                              'please compelete your information ',
-                            ),
-                          );
+                          final snackBar = SnackBar(
+                              backgroundColor: Colors.orange,
+                              content: Text(
+                                FlutterI18n.translate(
+                                    context, 'addressvalidationmessage'),
+                              ));
 
 // Find the ScaffoldMessenger in the widget tree
 // and use it to show a SnackBar.

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopizy/models/category.dart';
@@ -25,7 +28,8 @@ class SearchProvider with ChangeNotifier {
   SearchProvider({this.pageTitle, this.initialDataParameters}) {
     loadInitialSearchResults();
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         ++page;
         moreLoading = true;
         notifyListeners();
@@ -34,9 +38,13 @@ class SearchProvider with ChangeNotifier {
     });
   }
 
-  loadInitialSearchResults() {
-    searchParameters = SearchParameters.fromDataParameters(initialDataParameters);
-    Get.find<ProductService>().searchProducts(searchParameters).then((SearchResponse response) {
+  loadInitialSearchResults() async {
+    await categoryDetailsEvent();
+    searchParameters =
+        SearchParameters.fromDataParameters(initialDataParameters);
+    Get.find<ProductService>()
+        .searchProducts(searchParameters)
+        .then((SearchResponse response) {
       products = response.productList;
       totalProducts = response.totalProducts;
       this.searchResponse = response;
@@ -56,8 +64,10 @@ class SearchProvider with ChangeNotifier {
     Get.back();
   }
 
-  List<Category> get parentCategories =>
-      searchResponse.categories.length > 1 ? searchResponse.categories.sublist(0, searchResponse.categories.length - 1) : [];
+  List<Category> get parentCategories => searchResponse.categories.length > 1
+      ? searchResponse.categories
+          .sublist(0, searchResponse.categories.length - 1)
+      : [];
 
   toggleBrand(int brandId) {
     if (searchParameters.brandIds.contains(brandId))
@@ -70,7 +80,8 @@ class SearchProvider with ChangeNotifier {
     if (searchParameters.propertyFilter.containsKey(propertyId)) {
       if (searchParameters.propertyFilter[propertyId].contains(valueId)) {
         searchParameters.propertyFilter[propertyId].remove(valueId);
-        if (searchParameters.propertyFilter[propertyId].isEmpty) searchParameters.propertyFilter.remove(propertyId);
+        if (searchParameters.propertyFilter[propertyId].isEmpty)
+          searchParameters.propertyFilter.remove(propertyId);
       } else {
         searchParameters.propertyFilter[propertyId].add(valueId);
       }
@@ -90,7 +101,8 @@ class SearchProvider with ChangeNotifier {
     if (clearPreviousResults) clearPagination();
     if (!clearPreviousResults && products.length == totalProducts) return;
     searchParameters.pageIndex = page;
-    SearchResponse response = await Get.find<ProductService>().searchProducts(searchParameters);
+    SearchResponse response =
+        await Get.find<ProductService>().searchProducts(searchParameters);
     totalProducts = response.totalProducts;
     products.addAll(response.productList);
     this.searchResponse = response;
@@ -104,5 +116,18 @@ class SearchProvider with ChangeNotifier {
     products.clear();
     page = 0;
     totalProducts = 0;
+  }
+
+  Future<dynamic> categoryDetailsEvent() async {
+    log("category visit Event");
+    log(pageTitle);
+    try {
+      await FirebaseAnalytics.instance
+          .logEvent(name: 'category_visited', parameters: {
+        'categroy': pageTitle,
+      });
+    } catch (r) {
+      print(r);
+    }
   }
 }

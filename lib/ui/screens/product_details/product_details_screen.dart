@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -58,6 +60,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     provider = Provider.of(context);
+
     // this.price = provider.product.price;
     // this.oldPrice = provider.product.oldPrice;
     // this.priceAfterDiscount = provider.product.priceAfterDiscount;
@@ -350,8 +353,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         if (provider.product.oldPrice != null &&
                             provider.product.oldPrice != 0)
                           Text(
-                              provider.product.oldPrice != null
-                                  ? provider.product.oldPrice.toString()
+                              (provider.product.oldPrice != null ||
+                                      !provider.product.haspriceperoption)
+                                  ? provider.product.oldPrice.currencyFormat()
                                   : changeprice(chosenoption, "oldprice"),
                               style: TextStyle(
                                   fontSize: 13,

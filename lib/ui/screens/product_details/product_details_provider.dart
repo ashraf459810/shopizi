@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +35,8 @@ class ProductDetailsProvider with ChangeNotifier {
     fetchProductWithFavoriteStatus(productId);
   }
 
-  fetchProductWithFavoriteStatus(int productId) {
+  fetchProductWithFavoriteStatus(int productId) async {
+    await productDetailsEvent();
     reviews.clear();
     selectedOptions = {};
     Get.find<ProductService>().fetchProductInfo(productId).then((productInfo) {
@@ -125,5 +129,17 @@ class ProductDetailsProvider with ChangeNotifier {
                 ? 'productaddedtofavorites'
                 : 'productremovedfromfavorites'));
     notifyListeners();
+  }
+
+  Future<dynamic> productDetailsEvent() async {
+    log("product details Event");
+    try {
+      await FirebaseAnalytics.instance
+          .logEvent(name: 'view_product', parameters: {
+        'product_id': productId,
+      });
+    } catch (r) {
+      print(r);
+    }
   }
 }

@@ -1,10 +1,9 @@
-import 'dart:ui';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/loaders/network_file_translation_loader.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -41,6 +40,10 @@ void main() async {
 }
 
 class ShopizyApp extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   Widget build(BuildContext context) {
     appTheme = AppTheme();
@@ -51,6 +54,7 @@ class ShopizyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => UserProvider()),
       ],
       child: GetMaterialApp(
+        navigatorObservers: <NavigatorObserver>[observer],
         initialBinding: AppBinding(),
         localizationsDelegates: [
           FlutterI18nDelegate(

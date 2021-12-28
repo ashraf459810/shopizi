@@ -353,8 +353,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         if (provider.product.oldPrice != null &&
                             provider.product.oldPrice != 0)
                           Text(
-                              (provider.product.oldPrice != null ||
-                                      !provider.product.haspriceperoption)
+                              !provider.product.haspriceperoption
                                   ? provider.product.oldPrice.currencyFormat()
                                   : changeprice(chosenoption, "oldprice"),
                               style: TextStyle(
@@ -581,6 +580,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         chosenoption = option;
 
         chosedattribueid = attributeId;
+        setState(() {});
 
         if (option.status)
           setState(() {
@@ -713,7 +713,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       }
     }
     if (value == "oldprice") {
-      if (option != null)
+      if (option != null) {
         return
             //  chosenoption != null
             //     ?
@@ -721,8 +721,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ? chosenoption.propertyPrice.oldPrice.currencyFormat()
                 // : " "
                 : "";
-      else
-        return "";
+      } else {
+        return provider.product.oldPrice.currencyFormat();
+      }
     }
     //  else {
     //   return

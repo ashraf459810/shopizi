@@ -124,7 +124,7 @@ class SearchProvider with ChangeNotifier {
     try {
       await FirebaseAnalytics.instance
           .logEvent(name: 'category_visited', parameters: {
-        'categroy': pageTitle,
+        'category': pageTitle,
       });
     } catch (r) {
       print(r);

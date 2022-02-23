@@ -537,7 +537,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             color: Colors.white,
             child: ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: AlwaysScrollableScrollPhysics(),
               itemCount: provider.groupProducts.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, index) => GestureDetector(

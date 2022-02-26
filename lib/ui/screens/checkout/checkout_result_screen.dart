@@ -3,7 +3,6 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shopizy/models/payment_result.dart';
-import 'package:shopizy/ui/screens/home/home_screen.dart';
 import 'package:shopizy/ui/screens/main/main_screen.dart';
 import 'package:shopizy/ui/screens/order_details/order_details_provider.dart';
 import 'package:shopizy/ui/screens/order_details/order_details_screen.dart';

@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -79,7 +78,7 @@ class CheckoutProvider with ChangeNotifier {
         cartInfo.addresses.firstWhere((element) => element.isSelected).id,
       );
       PaymentResult result = await Get.find<CartController>().checkout();
-      Fluttertoast.showToast(msg: result.message);
+      // Fluttertoast.showToast(msg: result.message);
       if (result.redirectUrl == null)
         Get.offUntil(
           MaterialPageRoute(builder: (ctx) => CheckoutResultScreen(result)),

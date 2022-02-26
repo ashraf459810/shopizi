@@ -45,7 +45,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 16),
                   orderInfo(context, provider.orderDetails.createdOn, provider.orderDetails.statusDescription,
-                      provider.orderDetails.cancelReason),
+                      provider.orderDetails.cancelReason,   provider.orderDetails.paymentOptionTitle),
                   SizedBox(height: 16),
                   deliveryAddress(context, provider.orderDetails.deliveryAddress),
                   SizedBox(height: 16),
@@ -64,7 +64,7 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  orderInfo(BuildContext context, String createdOn, String statsText, String cancelReason) => Container(
+  orderInfo(BuildContext context, String createdOn, String statsText, String cancelReason , String paymentMethod) => Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: AppShapes.roundedRectDecoration(radius: 8),
         child: Column(
@@ -76,12 +76,20 @@ class OrderDetailsScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
+                       Row(
+              children: [
+                Text('${FlutterI18n.translate(context, 'paymentmethod')}: ', style: TextStyle(color: Colors.grey[600], fontSize: 16)),
+                Text(paymentMethod, style: TextStyle(color: Colors.black, fontSize: 16)),
+              ],
+            ),
+            SizedBox(height: 10,),
             Row(
               children: [
                 Text('${FlutterI18n.translate(context, 'status')}: ', style: TextStyle(color: Colors.grey[600], fontSize: 16)),
                 Text(statsText, style: TextStyle(color: Colors.black, fontSize: 16)),
               ],
             ),
+      
             if (cancelReason != null)
               Container(
                 margin: EdgeInsets.only(top: 12),

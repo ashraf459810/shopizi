@@ -15,8 +15,10 @@ class OrderDetails {
   final List<CartItem> orderItems;
   final String cancelReason;
   final int status;
+  final String paymentOptionTitle;
 
-  OrderDetails({
+  OrderDetails( {
+    this.paymentOptionTitle,
     this.id,
     this.createdOn,
     this.statusDescription,
@@ -33,6 +35,9 @@ class OrderDetails {
 
   factory OrderDetails.fromJson(Map<String, dynamic> data) {
     return OrderDetails(
+                 paymentOptionTitle : data['paymentOptionTitle'],
+   
+
         id: data['id'],
         createdOn: DateFormat('MMM dd, yyyy').format(DateFormat('yyyy-MM-ddTHH:mm:ss').parse(data['createdOn'], true)),
         statusDescription: data['statusDescription'],
@@ -41,6 +46,7 @@ class OrderDetails {
         cartDiscountRate: data['cartDiscountRate'],
         subTotal: data['subTotal'].toDouble(),
         totalShippingAmount: data['totalShippingAmount'].toDouble(),
+
         totalAmount: data['totalAmount'].toDouble(),
         orderItems: (data['orderItems'] as List).map((e) => CartItem.fromOrderItemsJson(e)).toList(),
         cancelReason: data['cancelReason'],
